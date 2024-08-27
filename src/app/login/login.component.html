@@ -1,0 +1,26 @@
+<header>
+  <h1 style="  margin: 0% 32%;">Welcome to Gift Store</h1>
+</header>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2>Login</h2>
+      <form >
+        <div class="input-box">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required [(ngModel)]="name"/>
+        </div>
+        <div class="input-box">
+          <label for="gender">Types</label>
+          <select id="gender" name="gender" required [(ngModel)]="selectedChoice">
+            <option [value]="''" [disabled]="true">Select your Type</option>
+            <option *ngFor="let choice of choiceList" [value]="choice">{{choice}}</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <button (click)="goToProduct()" type="submit">Go to Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

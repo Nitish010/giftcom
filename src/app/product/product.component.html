@@ -1,0 +1,115 @@
+
+<body>
+
+    <h1 style="  margin: 0% 32%;">Welcome to Gift Store</h1>
+
+  <div class="container">
+      
+
+        <div  *ngIf="genderCode == 'Couple'" class="category-bar">
+            <select name="gender" [(ngModel)]="selectedChoice" (change)="arrangeProductListData()">
+                
+                <option [value]="'Boy'">Boy</option>
+                <option [value]="'Girl'">Girl</option>
+                
+            </select>
+        </div>
+
+
+        <!-- Product List Section -->
+        <div class="product-list">
+            <h2>Product List</h2>
+            <ul cdkDropList cdkDropListConnectedTo="drop-list" >
+                <li *ngFor="let product of productList" class="product-line" cdkDrag >
+                    <img src="{{product.imageUrl}}" alt="Product 1">
+                    <div class="product-info">
+                        <p>{{product.name}}</p>
+                        <span>${{product.price}}</span>
+                    </div>
+                    <button style="cursor: pointer;" (click)="addToCart(product)">{{(cartProductCodes.includes(product.productCode))?'Add Again':'Add to Cart'}}</button>
+     
+            </ul>
+            <br>
+            <h2 *ngIf="specialProd.length > 0">Custom Prod</h2>
+            <ul *ngIf="specialProd.length > 0" cdkDropList cdkDropListConnectedTo="drop-list" >
+                <li *ngFor="let product of specialProd" class="product-line" cdkDrag >
+                    <img src="{{product.imageUrl}}" alt="Product 1">
+                    <div class="product-info">
+                        <p>{{product.name}}</p>
+                        <span>${{product.price}}</span>
+                    </div>
+                    <button style="cursor: pointer;" (click)="addToCart(product)">{{(cartProductCodes.includes(product.productCode))?'Add Again':'Add to Cart'}}</button>
+     
+            </ul>
+        </div>
+
+        <!-- Cart Section -->
+        <div class="cart">
+            
+           
+
+
+            <h2>Your Cart</h2>
+            <div *ngIf="cart.productList.length == 0" cdkDropList id="drop-list" (cdkDropListDropped)="drop($event)" class="empty-cart" style="display: flex; border: 8px solid #f4f1f1;">
+                <div>
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-illustration-download-in-svg-png-gif-file-formats--shopping-ecommerce-simple-error-state-pack-user-interface-illustrations-6024626.png" alt="Empty Cart">
+                    <p>Your cart is empty.</p>
+                </div>
+                <div>
+                    <p>Add or drag product here Add to Cart</p>
+                </div>
+            </div>
+
+            <ul *ngIf="cart.productList.length > 0"  cdkDropList  id="drop-list"  (cdkDropListDropped)="drop($event)" >
+                <li [ngClass]="(cartProduct.quantity > 0)?'':'ptr-evt'" *ngFor="let cartProduct of cart.productList; let cidx = index">
+                    <img src="{{cartProduct.product.imageUrl}}" alt="Product 2">
+                    <div class="product-info">
+                        <p>{{cartProduct.product.name}}</p>
+                        <span>${{cartProduct.product.price}}</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button [ngClass]="(cartProduct.quantity == 0)?'ptr-evt':''" (click)="changeProductQuantity(-1, cidx)">-</button>
+                        <span>{{cartProduct.quantity}}</span>
+                        <button (click)="changeProductQuantity(1, cidx)">+</button>
+                    </div>
+                    <button (click)="removeItemFromCart(cartProduct.product, cidx)" class="remove">{{cartProduct.quantity > 0?'Remove':'Removed'}}</button>
+                </li>
+               
+            </ul>
+            <p *ngIf="cart.itemCount > 0">Total: ${{cart.cartPrice}}</p>
+            <button (click)="checkOut()" *ngIf="cart.itemCount > 0">Checkout</button>
+
+            <div *ngIf="orderList.length > 0" class="orders">
+                <h3>Orders</h3>
+                <ul>
+                  <li *ngFor="let order of orderList; let oidx = index" class="order-item">
+                    <div class="order-header">
+                        <span>Order #00{{oidx + 1}}</span>
+                      </div>
+                    <ul class="product-list">
+                      <li *ngFor="let orProduct of order.productList">
+                        <img src="{{orProduct.product.imageUrl}}" alt="Product Image">
+                        <span>{{orProduct.product.name}} - Quantity: {{orProduct.quantity}}</span>
+                      </li>
+                     
+                    </ul>
+                    Price: {{order.cartPrice}} 
+                    <button (click)="cancelOrder(oidx)">Cancel</button>
+                  </li>
+               
+                </ul>
+              </div>
+        </div>
+    </div>
+
+
+
+    
+    
+</body>
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+
+<body>
+  <div class="container">
+    <h1>Add Product</h1>
+    <form class="product-form">
+      <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required [(ngModel)]="editProduct.name">
+      </div>
+
+      <div class="form-group">
+        <label for="imageUrl">Image URL:</label>
+        <input type="url" id="imageUrl" name="imageUrl" required [(ngModel)]="editProduct.imageUrl">
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required [(ngModel)]="editProduct.price">
+      </div>
+
+      <div class="form-group">
+        <label for="productCode">Product Code:</label>
+        <input type="text" id="productCode" name="productCode" required [(ngModel)]="editProduct.productCode">
+      </div>
+
+      <button type="submit" (click)="addProduct()">Add Product</button>
+    </form>
+  </div>
+</body>
+
